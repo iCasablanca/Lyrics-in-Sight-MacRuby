@@ -17,8 +17,7 @@ class	ITunesNotifier < AbstractNotifier
 																																selector: :"songChanged:",
 																																name: "com.apple.iTunes.playerInfo",
 																																object: nil)
-			path = NSBundle.mainBundle.resourcePath.mutableCopy << "/ITunes.bridgesupport"
-			load_bridge_support_file path
+			load_bridge_support_file NSBundle.mainBundle.resourcePath.mutableCopy << "/ITunes.bridgesupport"
 			@iTunes = SBApplication.applicationWithBundleIdentifier("com.apple.iTunes")
 			@userInfo = nil
 			@whitespaceCharacters = NSCharacterSet.characterSetWithCharactersInString(" \t")
@@ -27,11 +26,10 @@ class	ITunesNotifier < AbstractNotifier
 	end
 	
 	def songChanged(notification)
-		songInfo = notification.userInfo
-		@userInfo = songInfo.mutableCopy
+		@userInfo = notification.userInfo.mutableCopy
 		
 		if @iTunes.currentTrack != nil
-			@userInfo.setObject(lyricsOfTrack(@iTunes.currentTrack), forKey: "Lyrics")
+			@userInfo["Lyrics"] = lyricsOfTrack(@iTunes.currentTrack)
 		end
 		
 		@panelControllers.each do |controller|
@@ -40,51 +38,52 @@ class	ITunesNotifier < AbstractNotifier
 	end
 	
 	def requestUpdate(controller)
+		NSLog("request Update")
 		if @userInfo == nil
-			@userInfo = NSMutableDictionary.new
-			state = @iTunes.playerState
-			case state
+			NSLog("userInfo = nil")
+			@userInfo = Hash.new
+			case @iTunes.playerState
 			when ITunesEPlSStopped
-				@userInfo.setObject("Stopped", forKey: "Player State")
+				@userInfo["Player State"] = "Stopped"
 			when ITunesEPlSPlaying
-				@userInfo.setObject("Playing", forKey: "Player State")
+				@userInfo["Player State"] = "Playing"
 			when ITunesEPlSPaused
-				@userInfo.setObject("Paused", forKey: "Player State")
+				@userInfo["Player State"] = "Paused"
 			when ITunesEPlSFastForwarding
-				@userInfo.setObject("Fast Forwarding", forKey: "Player State")
+				@userInfo["Player State"] = "Fast Forwarding"
 			when ITunesEPlSRewinding
-				@userInfo.setObject("Rewinding", forKey: "Player State")
+				@userInfo["Player State"] = "Rewinding"
 			else
 				NSLog("Player State not found")
 			end
 			
 			currentTrack = @iTunes.currentTrack
 			if currentTrack != nil
-				@userInfo.setObject(currentTrack.album, forKey: "Album") if currentTrack.album
-				@userInfo.setObject(currentTrack.albumArtist, forKey: "Album Artist") if currentTrack.albumArtist
-				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.albumRating), forKey: "Album Rating")
-				@userInfo.setObject(currentTrack.artist, forKey: "Artist") if currentTrack.artist
-				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.artworks.count), forKey: "Artwork Count")
-				@userInfo.setObject(NSNumber.numberWithBool(currentTrack.compilation), forKey: "Compilation")
-				@userInfo.setObject(currentTrack.composer, forKey: "Composer") if currentTrack.composer
-				@userInfo.setObject(currentTrack.objectDescription, forKey: "Description") if currentTrack.objectDescription
-				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.discCount), forKey: "Disc Count")
-				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.discNumber), forKey: "Disc Number")
-				@userInfo.setObject(NSNumber.numberWithBool(currentTrack.gapless), forKey: "GaplessAlbum")
-				@userInfo.setObject(currentTrack.genre, forKey: "Genre") if currentTrack.genre
-				@userInfo.setObject(currentTrack.grouping, forKey: "Grouping") if currentTrack.grouping
-				@userInfo.setObject(currentTrack.name, forKey: "Name") if currentTrack.name
-				@userInfo.setObject(currentTrack.persistentID, forKey: "PersistentID") if currentTrack.persistentID
-				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.playedCount), forKey: "Play Count")
-				@userInfo.setObject(currentTrack.playedDate, forKey: "Play Date") if currentTrack.playedDate
-				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.rating), forKey: "Rating Computed")
-				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.skippedCount), forKey: "Skip Count")
-				@userInfo.setObject(currentTrack.skippedDate, forKey: "Skip Date") if currentTrack.skippedDate
-				@userInfo.setObject(NSNumber.numberWithDouble(currentTrack.duration * 1000), forKey: "Total Time")
-				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.trackCount), forKey: "Track Count")
-				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.trackNumber), forKey: "Track Number")
-				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.year), forKey: "Year")
-				@userInfo.setObject(lyricsOfTrack(currentTrack), forKey: "Lyrics")
+				@userInfo["Album"] = currentTrack.album
+				@userInfo["Album Artist"] = currentTrack.albumArtist
+				@userInfo["Album Rating"] = currentTrack.albumRating
+				@userInfo["Artist"] = currentTrack.artist
+				@userInfo["Artwork Count"] = currentTrack.artworks.count
+				@userInfo["Compilation"] = currentTrack.compilation
+				@userInfo["Composer"] = currentTrack.composer
+				@userInfo["Description"] = currentTrack.objectDescription
+				@userInfo["Disc Count"] = currentTrack.discCount
+				@userInfo["Disc Number"] = currentTrack.discNumber
+				@userInfo["GaplessAlbum"] = currentTrack.gapless
+				@userInfo["Genre"] = currentTrack.genre
+				@userInfo["Grouping"] = currentTrack.grouping
+				@userInfo["Name"] = currentTrack.name
+				@userInfo["PersistentID"] = currentTrack.persistentID
+				@userInfo["Play Count"] = currentTrack.playedCount
+				@userInfo["Play Date"] = currentTrack.playedDate
+				@userInfo["Rating Computed"] = currentTrack.rating
+				@userInfo["Skip Count"] = currentTrack.skippedCount
+				@userInfo["Skip Date"] = currentTrack.skippedDate
+				@userInfo["Total Time"] = currentTrack.duration * 1000
+				@userInfo["Track Count"] = currentTrack.trackCount
+				@userInfo["Track Number"] = currentTrack.trackNumber
+				@userInfo["Year"] = currentTrack.year
+				@userInfo["Lyrics"] = lyricsOfTrack(currentTrack)
 			else
 				@userInfo = NSDictionary.new
 			end

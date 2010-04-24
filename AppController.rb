@@ -70,27 +70,26 @@ class AppController
 	end
 	
 	def registerUserDefaults
-		defaultValues = NSMutableDictionary.new
-		defaultValues.setObject([], forKey: @LiSPanelControllers)
+		defaultValues = {}
+		defaultValues[@LiSPanelControllers] = []
 		NSUserDefaults.standardUserDefaults.registerDefaults(defaultValues)
 	end
 	
 	def loadUserDefaults
 		defaults = NSUserDefaults.standardUserDefaults
 		@panelControllers = []
-		defaults.objectForKey(@LiSPanelControllers).each do |dict|
-			@panelControllers.addObject(PanelController.alloc.initWithControllerAndDictionary(self,dict))
+		defaults[@LiSPanelControllers].each do |dict|
+			@panelControllers.push(PanelController.alloc.initWithControllerAndDictionary(self,dict))
 		end
 	end
 	
 	def saveUserDefaults
 		defaults = NSUserDefaults.standardUserDefaults
-		panelControllerAsDictionary = NSMutableArray.alloc.initWithCapacity(@panelControllers.count)
+		panelControllerAsDictionary = []
 		@panelControllers.each do |controller|
-			panelControllerAsDictionary.addObject(controller.dictionary)
+			panelControllerAsDictionary.push(controller.dictionary)
 		end
-		defaults.setObject(panelControllerAsDictionary,
-											 forKey: @LiSPanelControllers)
+		defaults[@LiSPanelControllers] = panelControllerAsDictionary
 	end
 	
 	def switchEditMode
@@ -123,7 +122,7 @@ class AppController
 	
 	def addPanel(sender)
 		controller = PanelController.alloc.initWithControllerAndType(self, sender.title)
-		@panelControllers.addObject(controller)
+		@panelControllers.push(controller)
 		controller.showWindow(self)
 		if !@inEditMode
 			setEditMode(true)
@@ -136,7 +135,7 @@ class AppController
 	end
 	
 	def removePanel(controller)
-		@panelControllers.removeObject(controller)
+		@panelControllers.delete(controller)
 		
 		#save change to user defaults
 		saveUserDefaults

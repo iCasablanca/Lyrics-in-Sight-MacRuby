@@ -31,25 +31,25 @@ class	PanelController < NSWindowController
 	end
 	
 	def initWithControllerAndDictionary(controller, dictionary)
-		if initWithControllerAndType(controller, dictionary.objectForKey("Type"))
-			@formula					= dictionary.objectForKey("Formula")
-			@rect.origin.x		= dictionary.objectForKey("X").floatValue
-			@rect.origin.y		= dictionary.objectForKey("Y").floatValue
-			@rect.size.width	= dictionary.objectForKey("Width").floatValue
-			@rect.size.height	= dictionary.objectForKey("Height").floatValue
+		if initWithControllerAndType(controller, dictionary["Type"])
+			@formula					= dictionary["Formula"]
+			@rect.origin.x		= dictionary["X"]
+			@rect.origin.y		= dictionary["Y"]
+			@rect.size.width	= dictionary["Width"]
+			@rect.size.height	= dictionary["Height"]
 			self
 		end
 	end
 	
 	def dictionary
-		dictionary = NSMutableDictionary.new
-		dictionary.setObject(@type, forKey: "Type")
-		dictionary.setObject(@formula, forKey: "Formula")
-		dictionary.setObject(NSNumber.numberWithFloat(@rect.origin.x), forKey: "X")
-		dictionary.setObject(NSNumber.numberWithFloat(@rect.origin.y), forKey: "Y")
-		dictionary.setObject(NSNumber.numberWithFloat(@rect.size.width), forKey: "Width")
-		dictionary.setObject(NSNumber.numberWithFloat(@rect.size.height), forKey: "Height")
-		dictionary
+		dictionary = Hash.new
+		dictionary["Type"]		= @type
+		dictionary["Formula"]	= @formula
+		dictionary["X"]				= @rect.origin.x
+		dictionary["Y"]				= @rect.origin.y
+		dictionary["Width"]		= @rect.size.width
+		dictionary["Height"]	= @rect.size.height
+		dictionary 
 	end
 	
 	def update(userInfo)

@@ -10,7 +10,7 @@ class NotifierFactory
 	
 	def self.getNotifierForPanelController(controller)
 		type = controller.type
-		if type.isEqualToString("iTunes")
+		if type == "iTunes"
 			return ITunesNotifier.instance
 		else		
 			return nil
