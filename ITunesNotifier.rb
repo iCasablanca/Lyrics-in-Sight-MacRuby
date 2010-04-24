@@ -58,13 +58,41 @@ class	ITunesNotifier < AbstractNotifier
 				NSLog("Player State not found")
 			end
 			
-			# TODO: finish
+			currentTrack = @iTunes.currentTrack
+			if currentTrack != nil
+				@userInfo.setObject(currentTrack.album, forKey: "Album") if currentTrack.album
+				@userInfo.setObject(currentTrack.albumArtist, forKey: "Album Artist") if currentTrack.albumArtist
+				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.albumRating), forKey: "Album Rating")
+				@userInfo.setObject(currentTrack.artist, forKey: "Artist") if currentTrack.artist
+				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.artworks.count), forKey: "Artwork Count")
+				@userInfo.setObject(NSNumber.numberWithBool(currentTrack.compilation), forKey: "Compilation")
+				@userInfo.setObject(currentTrack.composer, forKey: "Composer") if currentTrack.composer
+				@userInfo.setObject(currentTrack.objectDescription, forKey: "Description") if currentTrack.objectDescription
+				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.discCount), forKey: "Disc Count")
+				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.discNumber), forKey: "Disc Number")
+				@userInfo.setObject(NSNumber.numberWithBool(currentTrack.gapless), forKey: "GaplessAlbum")
+				@userInfo.setObject(currentTrack.genre, forKey: "Genre") if currentTrack.genre
+				@userInfo.setObject(currentTrack.grouping, forKey: "Grouping") if currentTrack.grouping
+				@userInfo.setObject(currentTrack.name, forKey: "Name") if currentTrack.name
+				@userInfo.setObject(currentTrack.persistentID, forKey: "PersistentID") if currentTrack.persistentID
+				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.playedCount), forKey: "Play Count")
+				@userInfo.setObject(currentTrack.playedDate, forKey: "Play Date") if currentTrack.playedDate
+				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.rating), forKey: "Rating Computed")
+				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.skippedCount), forKey: "Skip Count")
+				@userInfo.setObject(currentTrack.skippedDate, forKey: "Skip Date") if currentTrack.skippedDate
+				@userInfo.setObject(NSNumber.numberWithDouble(currentTrack.duration * 1000), forKey: "Total Time")
+				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.trackCount), forKey: "Track Count")
+				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.trackNumber), forKey: "Track Number")
+				@userInfo.setObject(NSNumber.numberWithInt(currentTrack.year), forKey: "Year")
+				@userInfo.setObject(lyricsOfTrack(currentTrack), forKey: "Lyrics")
+			else
+				@userInfo = NSDictionary.new
+			end
 		end
 		controller.update(@userInfo)
 	end
 	
 	def lyricsOfTrack(track)
-		NSLog("track: #{track}")
 		lyrics = track.lyrics
 		if lyrics == nil
 			lyrics = ""

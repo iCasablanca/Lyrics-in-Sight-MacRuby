@@ -90,7 +90,7 @@ class	FormulaParser
 				
 				# search for matching opening character (may not be same as before)
 				range = temp.rangeOfString("{", options: NSBackwardsSearch)
-				NSAssert(range.location != NSNotFound, "'{' not found")
+				# NSAssert(range.location != NSNotFound, "'{' not found")
 				#split
 				part1 = temp.substringToIndex(range.location)
 				part2 = temp.substringFromIndex(range.location + 1)
