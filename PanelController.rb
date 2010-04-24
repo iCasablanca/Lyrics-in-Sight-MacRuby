@@ -101,8 +101,7 @@ class	PanelController < NSWindowController
 	end
 	
 	def windowDidLoad
-#		window.setLevel(kCGDesktopIconWindowLevel)
-		window.setLevel(CGWindowLevelForKey(2))
+		window.setLevel(CGWindowLevelForKey(KCGDesktopWindowLevelKey))
 		window.setFrame(@rect, display: true, animate: true)
 		setEditable(false)
 		

@@ -18,7 +18,7 @@ class	ITunesNotifier < AbstractNotifier
 																																selector: :"songChanged:",
 																																name: "com.apple.iTunes.playerInfo",
 																																object: nil)
-			load_bridge_support_file NSBundle.mainBundle.resourcePath.mutableCopy << "/ITunes.bridgesupport"
+			load_bridge_support_file NSBundle.mainBundle.resourcePath + "/ITunes.bridgesupport"
 			@iTunes = SBApplication.applicationWithBundleIdentifier("com.apple.iTunes")
 			@userInfo = nil
 			@whitespaceCharacters = NSCharacterSet.characterSetWithCharactersInString(" \t")
@@ -39,9 +39,7 @@ class	ITunesNotifier < AbstractNotifier
 	end
 	
 	def requestUpdate(controller)
-		NSLog("request Update")
 		if @userInfo == nil
-			NSLog("userInfo = nil")
 			@userInfo = Hash.new
 			case @iTunes.playerState
 			when ITunesEPlSStopped
