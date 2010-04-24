@@ -21,7 +21,7 @@ class	PanelController < NSWindowController
 			setShouldCascadeWindows(false)
 			@rect = NSMakeRect(500, 500, 500, 300)
 			@type = type
-			@formula = "Edit this text"
+			@formula = NSAttributedString.alloc.initWithString("Edit this text")
 			@inEditMode = false
 			
 			@notifier = NotifierFactory.getNotifierForPanelController(self)
@@ -32,7 +32,7 @@ class	PanelController < NSWindowController
 	
 	def initWithControllerAndDictionary(controller, dictionary)
 		if initWithControllerAndType(controller, dictionary["Type"])
-			@formula					= dictionary["Formula"]
+			@formula					= NSKeyedUnarchiver.unarchiveObjectWithData(dictionary["Formula"])
 			@rect.origin.x		= dictionary["X"]
 			@rect.origin.y		= dictionary["Y"]
 			@rect.size.width	= dictionary["Width"]
@@ -44,7 +44,7 @@ class	PanelController < NSWindowController
 	def dictionary
 		dictionary = Hash.new
 		dictionary["Type"]		= @type
-		dictionary["Formula"]	= @formula
+		dictionary["Formula"] = NSKeyedArchiver.archivedDataWithRootObject(@formula)
 		dictionary["X"]				= @rect.origin.x
 		dictionary["Y"]				= @rect.origin.y
 		dictionary["Width"]		= @rect.size.width
@@ -63,7 +63,8 @@ class	PanelController < NSWindowController
 		end
 		
 		parser = FormulaParser.alloc.initWithDictionary(userInfo)
-		@textView.setString(parser.evaluateFormula(@formula))
+		attributedString = parser.evaluateFormula(@formula)
+		@textView.textStorage.setAttributedString(attributedString)
 	end
 	
 	def editModeStarted
@@ -71,13 +72,13 @@ class	PanelController < NSWindowController
 		
 		setEditable(true)
 		
-		@textView.setString(@formula)
+		@textView.textStorage.setAttributedString(@formula)
 	end
 	
 	def editModeStopped
 		@inEditMode = false
 		
-		@formula = @textView.string.copy
+		@formula = NSAttributedString.alloc.initWithAttributedString(@textView.textStorage) # copy attributed string back
 		@rect = window.frame
 		
 		setEditable(false)
@@ -105,8 +106,6 @@ class	PanelController < NSWindowController
 		window.setFrame(@rect, display: true, animate: true)
 		setEditable(false)
 		
-		@textView.setTextColor(NSColor.whiteColor)
-		
 		@notifier.requestUpdate(self)
 		
 		window.display
@@ -118,7 +117,7 @@ class	PanelController < NSWindowController
 	end
 	
 	def description
-		"PanelController: type = '#{@type}', formula = '#{@formula}', x = #{rect.origin.x}, y = #{rect.origin.y}, width = #{rect.size.width}, height = #{rect.size.height}"
+		"PanelController: type = '#{@type}', formula = '#{@formula.string}', x = #{rect.origin.x}, y = #{rect.origin.y}, width = #{rect.size.width}, height = #{rect.size.height}"
 	end
 	
 end

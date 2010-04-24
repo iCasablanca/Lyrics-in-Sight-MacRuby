@@ -16,87 +16,90 @@ class	FormulaParser
 	end
 	
 	def evaluateNextAlternative(formula)
-		range = formula.rangeOfString("|")
+		range = formula.string.rangeOfString("|")
 		if range.location == NSNotFound # last alternative: return empty string
-			return ""
+			return NSAttributedString.new
 		end
 		# alternative found -> evaluate
-		return evaluateFormula(formula.substringFromIndex(range.location + 1))
+		return evaluateFormula(formula.attributedSubstringFromRange([range.location + 1, formula.string.length - range.location - 1]))
 	end
 	
 	def evaluateFormula(formula)
-		output = ""
+		output = NSMutableAttributedString.new
 		while true
 			
-			if formula.length > 0 && formula.characterAtIndex(0) == '['
-				range = formula.rangeOfString("]")
+			if formula.string.length > 0 && formula.string.characterAtIndex(0).chr == "["
+				range = formula.string.rangeOfString("]")
 				if range.location == NSNotFound
 					NSLog("Formula malformed: '[' without matching ']'")
-					return ""
+					return NSAttributedString.new
 				end
 				# split
-				condition = formula.substringWithRange(NSMakeRange(1, range.location - 1))
-				formula = formula.substringFromIndex(range.location + 1)
+				condition = formula.attributedSubstringFromRange([1, range.location - 1])
+				formula = formula.attributedSubstringFromRange([range.location + 1, formula.string.length - range.location - 1])
 				# test condition
 				if !evaluateCondition(condition)
 					return evaluateNextAlternative(formula)
 				end
 			end
 			
-			range = formula.rangeOfCharacterFromSet(NSCharacterSet.characterSetWithCharactersInString("<{|"))
+			range = formula.string.rangeOfCharacterFromSet(NSCharacterSet.characterSetWithCharactersInString("<{|"))
 			# no special characters found -> append remaining formula and return output
 			if range.location == NSNotFound
-				output << formula
+				output.appendAttributedString(formula)
 				return output
 			end
 			
 			# split at speacial character (append string before, formula  = string after)
-			output << formula.substringToIndex(range.location)
-			ch = formula.characterAtIndex(range.location)
-			formula = formula.substringFromIndex(range.location + 1)
+			output.appendAttributedString( formula.attributedSubstringFromRange([0, range.location]) )
+			ch = formula.string.characterAtIndex(range.location)
+			formula = formula.attributedSubstringFromRange([range.location + 1, formula.string.length - range.location - 1])
 			
 			case ch.chr
 			when "<"
 				# search for matching closing character
-				range = formula.rangeOfString(">")
+				range = formula.string.rangeOfString(">")
 				if range.location == NSNotFound
 					NSLog("Formula malformed: '<' without matching '>'")
-					return ""
+					return NSAttributedString.new
 				end
 				
 				# split at closing character (token = string before, formula = string after)
-				token = formula.substringToIndex(range.location)
-				formula = formula.substringFromIndex(range.location + 1)
+				token = formula.attributedSubstringFromRange([0, range.location])
+				formula = formula.attributedSubstringFromRange([range.location + 1, formula.string.length - range.location - 1])
 				
 				value = evaluateToken(token)
 				if value == nil # token evaluates to nil -> find next alternative
 					return evaluateNextAlternative(formula)
 				end
 				# append evaluated token
-				output << value
+				output.appendAttributedString(value)
 			when "{"
 				# search for (matching) closing character
-				range = formula.rangeOfString("}")
+				range = formula.string.rangeOfString("}")
 				if range.location == NSNotFound
 					NSLog("Formula malformed: '{' without matching '}'")
-					return ""
+					return NSAttributedString.new
 				end
 				
 				#split at first closing character
-				part1 = ""
-				part2 = ""
-				part3 = formula.substringFromIndex(range.location + 1) 
-				temp  = "{" << formula.substringToIndex(range.location)
+				part1 = NSMutableAttributedString.new
+				part2 = NSMutableAttributedString.new
+				part3 = formula.attributedSubstringFromRange([range.location + 1, formula.string.length - range.location - 1])
+				temp  = NSMutableAttributedString.alloc.initWithString("{")
+				temp.appendAttributedString(formula.attributedSubstringFromRange([0, range.location]))
 				
 				# search for matching opening character (may not be same as before)
-				range = temp.rangeOfString("{", options: NSBackwardsSearch)
+				range = temp.string.rangeOfString("{", options: NSBackwardsSearch)
 				# NSAssert(range.location != NSNotFound, "'{' not found")
 				#split
-				part1 = temp.substringToIndex(range.location)
-				part2 = temp.substringFromIndex(range.location + 1)
+				part1 = temp.attributedSubstringFromRange([0, range.location])
+				part2 = temp.attributedSubstringFromRange([range.location + 1, temp.string.length - range.location - 1])
 				
 				#append all first part, evaluated second part and thir part
-				formula << part1 << evaluateFormula(part2) << part3
+				formula = NSMutableAttributedString.alloc.initWithAttributedString(part1)
+				formula.appendAttributedString(evaluateFormula(part2))
+				formula.appendAttributedString(part3)
 			when "|"
 				return output
 			else
@@ -106,22 +109,28 @@ class	FormulaParser
 	end
 	
 	def evaluateToken(token)
-		range = token.rangeOfCharacterFromSet(@specialCharacters)
+		range = token.string.rangeOfCharacterFromSet(@specialCharacters)
 		if range.location != NSNotFound
 			NSLog("Malformed token #{token}")
 			return nil
 		end
-		return @dictionary.objectForKey(token).description
+		resultString = @dictionary[token.string].description
+		attributes = token.attributesAtIndex(0, effectiveRange: nil)
+		if !resultString || resultString == ""
+			return nil
+		else
+			return NSAttributedString.alloc.initWithString(resultString, attributes: attributes)
+		end
 	end
 	
 	def evaluateCondition(condition)
 		# search for == operator
-		range = condition.rangeOfString("==")
+		range = condition.string.rangeOfString("==")
 		equal = true
 		
 		if range.location == NSNotFound
 			# search for != operator
-			range = condition.rangeOfString("!=")
+			range = condition.string.rangeOfString("!=")
 			equal = false
 		end
 		
@@ -131,33 +140,34 @@ class	FormulaParser
 		end
 		
 		# split condition at operator
-		first = condition.substringToIndex(range.location)
-		second = condition.substringFromIndex(range.location + 2)
+		first = condition.attributedSubstringFromRange([0, range.location])
+		second = condition.attributedSubstringFromRange([range.location + 2, condition.string.length - range.location - 2])
 		
 		# evaluate first operand
-		if first.length > 0 && first.characterAtIndex(0) == '"' && first.characterAtIndex(first.length - 1) == '"'
-			first = first.substringWithRange(NSMakeRange(1, first.length - 2))
-		elsif first.length > 0 && first.characterAtIndex(0) == '<' && first.characterAtIndex(first.length - 1) == '>'
-			first = evaluateToken(first.substringWithRange(NSMakeRange(1, first.length - 2)))
+		if first.string.length > 0 && first.string.characterAtIndex(0).chr == '"' && first.string.characterAtIndex(first.length - 1).chr == '"'
+			first = first.attributedSubstringFromRange([1, first.length - 2])
+		elsif first.string.length > 0 && first.string.characterAtIndex(0).chr == '<' && first.string.characterAtIndex(first.length - 1).chr == '>'
+			first = evaluateToken(first.attributedSubstringFromRange([1, first.length - 2]))
 		else
 			first = nil
 		end
 		
 		# evaluate second operand
-		if second.length > 0 && second.characterAtIndex(0) == '"' && second.characterAtIndex(second.length - 1) == '"'
-			second = second.substringWithRange(NSMakeRange(1, second.length - 2))
-		elsif second.length > 0 && second.characterAtIndex(0) == '<' && second.characterAtIndex(second.length - 1) == '>'
-			second = evaluateToken(second.substringWithRange(NSMakeRange(1, second.length - 2)))
+		if second.string.length > 0 && second.string.characterAtIndex(0).chr == '"' && second.string.characterAtIndex(second.length - 1).chr == '"'
+			second = second.attributedSubstringFromRange([1, second.length - 2])
+		elsif second.string.length > 0 && second.string.characterAtIndex(0).chr == '<' && second.string.characterAtIndex(second.length - 1).chr == '>'
+			second = evaluateToken(second.attributedSubstringFromRange([1, second.length - 2]))
 		else
 			second = nil
 		end
 		
 		# an operand was evaluated to nil -> return false
 		if first == nil || second == nil
+			NSLog("First (#{first}) or second (#{second}) is nil")
 			return false
 		end
 		
-		result = first.isEqualToString(second)
+		result = (first.string. == second.string)
 		
 		if equal
 			return result
