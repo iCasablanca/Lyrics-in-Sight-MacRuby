@@ -6,6 +6,7 @@
 
 require 'singleton'
 require "AbstractNotifier"
+require "LyricsFinder"
 framework 'ScriptingBridge'
 
 class	ITunesNotifier < AbstractNotifier
@@ -98,8 +99,19 @@ class	ITunesNotifier < AbstractNotifier
 		end
 		
 		if lyrics == ""
-			# TODO find lyrics
+			lyrics = LyricsFinder.instance.findLyricsOf(track.name, by:track.artist)
+			## uncomment the following line to automatically set lyrics of song, if found
+			# if lyrics != "" # set lyrics of song via iTunes 
+			# @iTunes.currentTrack.setLyrics(lyrics)
+			# end
 		end
+		
+		if lyrics != ""
+			lyrics = lyrics.gsub("\r\n", "\n")  # replace new line by line feed
+			lyrics = lyrics.gsub("\r", "\n")    # replace carriage return by line feed
+			lyrics = lyrics.split("\n").collect{|line| line.strip }.join("\n") # trim each line
+		end
+		
 		lyrics
 	end
 	
