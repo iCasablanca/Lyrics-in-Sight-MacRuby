@@ -5,8 +5,8 @@
 # Copyright 2010 __MyCompanyName__. All rights reserved.
 
 require 'singleton'
-require "AbstractNotifier"
-require "LyricsFinder"
+require 'AbstractNotifier'
+require 'LyricsFinder'
 framework 'ScriptingBridge'
 
 class	ITunesNotifier < AbstractNotifier

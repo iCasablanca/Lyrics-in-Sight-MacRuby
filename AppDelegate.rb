@@ -19,7 +19,6 @@ class AppDelegate
 	
 	def applicationShouldTerminate(application)
 		@controller.setEditMode(false)
-		@controller.saveUserDefaults
 		NSTerminateNow
 	end
 	

@@ -9,6 +9,26 @@ require 'uri'
 class LyricsFinder
 	include Singleton
 		
+	def	findLyricsOf(title, by:artist)
+		return "" if title == nil or artist == nil
+		baseUrl = "http://lyrics.wikia.com/"
+  
+    # try to download lyrics with given artist and title
+    url = baseUrl + encodeUri(artist) + ":" + encodeUri(title)
+		lyrics = downloadLyricsFrom(url)  
+    return lyrics unless not lyrics
+
+		# try to download lyrics using given artist and capitalized title
+		url = baseUrl + encodeUri(artist) + ":" + encodeUri(title.capitalizedString)
+		lyrics = downloadLyricsFrom(url)  
+    return lyrics unless not lyrics
+		
+		# lyrics not found
+		return ""
+	end
+	
+	private
+	
 	def downloadLyricsFrom(url)
 		data = NSData.dataWithContentsOfURL( NSURL.URLWithString(url) )
 		return nil if data == nil
@@ -31,22 +51,5 @@ class LyricsFinder
     uri = uri.split.join("_")
     return URI.escape(uri, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
   end	
-		
-	def	findLyricsOf(title, by:artist)
-		return "" if title == nil or artist == nil
-		baseUrl = "http://lyrics.wikia.com/"
-  
-    # try to download lyrics with given artist and title
-    url = baseUrl + encodeUri(artist) + ":" + encodeUri(title)
-		lyrics = downloadLyricsFrom(url)  
-    return lyrics unless not lyrics
-
-		# try to download lyrics using given artist and capitalized title
-		url = baseUrl + encodeUri(artist) + ":" + encodeUri(title.capitalizedString)
-		lyrics = downloadLyricsFrom(url)  
-    return lyrics unless not lyrics
-		
-		# lyrics not found
-		return ""
-	end
+	
 end

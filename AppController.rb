@@ -4,22 +4,24 @@
 # Created by Michel Steuwer on 23.04.10.
 # Copyright 2010 __MyCompanyName__. All rights reserved.
 
-require "ITunesNotifier"
-require "PanelController"
-require "NotifierFactory"
+require 'ITunesNotifier'
+require 'PanelController'
+require 'NotifierFactory'
 
 class AppController
 	
 	def init
 		if super
 			@inEditMode = false
+			@panelPreferencesController = PanelPreferencesController.alloc.initWithController(self)
+			
 			# enum:
 			@quit_lyrics_in_sight_menu_item = 0
 			@edit_mode_menu_item = 1
 			@add_panel_menu_item = 2
 			# UserDefaults key
 			@LiSPanelControllers = "PanelControllers"
-			self
+			return self
 		end
 	end
 	
@@ -105,18 +107,22 @@ class AppController
 			return
 		end
 		if setToEditMode
+			#@panelPreferencesController.showWindow(self)
 			@panelControllers.each do |controller|
+				@panelPreferencesController.gainedFocus(controller) if controller.window.isMainWindow
 				controller.editModeStarted
 			end
 			@statusItem.menu.itemWithTag(@edit_mode_menu_item).setState(NSOnState)
 			@inEditMode = true
 		else
-			@panelControllers.each do |controller|
-				controller.editModeStopped
-			end
-			@statusItem.menu.itemWithTag(@edit_mode_menu_item).setState(NSOffState)
-			saveUserDefaults # save user defaults after finished edit mode
 			@inEditMode = false
+			if @panelPreferencesController.hideWindow
+				@panelControllers.each do |controller|
+					controller.editModeStopped
+				end
+				@statusItem.menu.itemWithTag(@edit_mode_menu_item).setState(NSOffState)
+				saveUserDefaults # save user defaults after finished edit mode
+			end
 		end
 	end
 	
@@ -139,6 +145,18 @@ class AppController
 		
 		#save change to user defaults
 		saveUserDefaults
+	end
+	
+	def gainedFocus(panelController)
+		@panelPreferencesController.gainedFocus(panelController) if @inEditMode
+	end
+	
+	def lostFocus(panelController)
+		@panelPreferencesController.lostFocus(panelController) if @inEditMode
+	end
+	
+	def	windowFrameChanged(panelController)
+		@panelPreferencesController.windowFrameChanged(panelController) if @inEditMode
 	end
 	
 end

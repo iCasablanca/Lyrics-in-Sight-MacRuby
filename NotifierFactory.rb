@@ -4,7 +4,7 @@
 # Created by Michel Steuwer on 23.04.10.
 # Copyright 2010 __MyCompanyName__. All rights reserved.
 
-require "ITunesNotifier"
+require 'ITunesNotifier'
 
 class NotifierFactory
 	

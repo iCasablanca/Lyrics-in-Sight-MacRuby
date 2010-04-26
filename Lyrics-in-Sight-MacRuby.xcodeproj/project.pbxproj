@@ -60,6 +60,9 @@
 		D07810D5118239DB00597466 /* ITunesNotifier.rb in Resources */ = {isa = PBXBuildFile; fileRef = D07810D4118239DB00597466 /* ITunesNotifier.rb */; };
 		D078124B1182494100597466 /* FormulaParser.rb in Resources */ = {isa = PBXBuildFile; fileRef = D078124A1182494100597466 /* FormulaParser.rb */; };
 		D078132111825B9C00597466 /* ITunes.bridgesupport in Resources */ = {isa = PBXBuildFile; fileRef = D078132011825B9C00597466 /* ITunes.bridgesupport */; };
+		D0A49A711185EFFC0068B594 /* PanelPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A49A701185EFFC0068B594 /* PanelPreferences.xib */; };
+		D0A49A751185F06F0068B594 /* PanelPreferencesController.rb in Resources */ = {isa = PBXBuildFile; fileRef = D0A49A741185F06F0068B594 /* PanelPreferencesController.rb */; };
+		D0A49AC11185FD8A0068B594 /* Panel.rb in Resources */ = {isa = PBXBuildFile; fileRef = D0A49AC01185FD8A0068B594 /* Panel.rb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -99,6 +102,9 @@
 		D07810D4118239DB00597466 /* ITunesNotifier.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ITunesNotifier.rb; sourceTree = "<group>"; };
 		D078124A1182494100597466 /* FormulaParser.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = FormulaParser.rb; sourceTree = "<group>"; };
 		D078132011825B9C00597466 /* ITunes.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ITunes.bridgesupport; sourceTree = "<group>"; };
+		D0A49A701185EFFC0068B594 /* PanelPreferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PanelPreferences.xib; sourceTree = "<group>"; };
+		D0A49A741185F06F0068B594 /* PanelPreferencesController.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PanelPreferencesController.rb; sourceTree = "<group>"; };
+		D0A49AC01185FD8A0068B594 /* Panel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Panel.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,11 +126,13 @@
 				D07810531182250700597466 /* AppDelegate.rb */,
 				D078105C1182272C00597466 /* AppController.rb */,
 				D07810A21182335200597466 /* PanelController.rb */,
+				D0A49AC01185FD8A0068B594 /* Panel.rb */,
 				D07810AC118237EA00597466 /* NotifierFactory.rb */,
 				D07810AF118238F500597466 /* AbstractNotifier.rb */,
 				D07810D4118239DB00597466 /* ITunesNotifier.rb */,
 				9E5F67BD1182F6B300598A81 /* LyricsFinder.rb */,
 				D078124A1182494100597466 /* FormulaParser.rb */,
+				D0A49A741185F06F0068B594 /* PanelPreferencesController.rb */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -196,6 +204,7 @@
 				2BFA9DA510CDF852007972A1 /* MainMenu.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				D0A49A701185EFFC0068B594 /* PanelPreferences.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -270,6 +279,9 @@
 				D078124B1182494100597466 /* FormulaParser.rb in Resources */,
 				D078132111825B9C00597466 /* ITunes.bridgesupport in Resources */,
 				9E5F67BE1182F6B300598A81 /* LyricsFinder.rb in Resources */,
+				D0A49A711185EFFC0068B594 /* PanelPreferences.xib in Resources */,
+				D0A49A751185F06F0068B594 /* PanelPreferencesController.rb in Resources */,
+				D0A49AC11185FD8A0068B594 /* Panel.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

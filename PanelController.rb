@@ -4,10 +4,10 @@
 # Created by Michel Steuwer on 23.04.10.
 # Copyright 2010 __MyCompanyName__. All rights reserved.
 
-require "AppController"
-require "AbstractNotifier"
-require "NotifierFactory"
-require "FormulaParser"
+require 'AppController'
+require 'AbstractNotifier'
+require 'NotifierFactory'
+require 'FormulaParser'
 
 class	PanelController < NSWindowController
 
@@ -22,11 +22,13 @@ class	PanelController < NSWindowController
 			@rect = NSMakeRect(500, 500, 500, 300)
 			@type = type
 			@formula = NSAttributedString.alloc.initWithString("Edit this text")
+			@backgroundColor = NSColor.colorWithCalibratedWhite(0.125, alpha:1.000)
+			@title = ""
 			@inEditMode = false
 			
 			@notifier = NotifierFactory.getNotifierForPanelController(self)
 			@notifier.registerPanelController(self)
-			self
+			return self
 		end
 	end
 	
@@ -37,7 +39,9 @@ class	PanelController < NSWindowController
 			@rect.origin.y		= dictionary["Y"]
 			@rect.size.width	= dictionary["Width"]
 			@rect.size.height	= dictionary["Height"]
-			self
+			@backgroundColor	= NSKeyedUnarchiver.unarchiveObjectWithData(dictionary["BackgroundColor"])
+			@title						= dictionary["Title"]
+			return self
 		end
 	end
 	
@@ -49,7 +53,9 @@ class	PanelController < NSWindowController
 		dictionary["Y"]				= @rect.origin.y
 		dictionary["Width"]		= @rect.size.width
 		dictionary["Height"]	= @rect.size.height
-		dictionary 
+		dictionary["BackgroundColor"] = NSKeyedArchiver.archivedDataWithRootObject(@backgroundColor)
+		dictionary["Title"]		= @title
+		return dictionary
 	end
 	
 	def update(userInfo)
@@ -80,6 +86,9 @@ class	PanelController < NSWindowController
 		
 		@formula = NSAttributedString.alloc.initWithAttributedString(@textView.textStorage) # copy attributed string back
 		@rect = window.frame
+		@backgroundColor = window.backgroundColor
+		@title = ""
+		@title = window.title if window.title
 		
 		setEditable(false)
 		
@@ -91,7 +100,7 @@ class	PanelController < NSWindowController
 		if newState
 			window.setStyleMask(window.styleMask | NSClosableWindowMask | NSResizableWindowMask | NSTitledWindowMask | NSUtilityWindowMask)
 		else
-			window.setStyleMask(window.styleMask & ~NSClosableWindowMask & ~NSResizableWindowMask & ~NSTitledWindowMask & ~NSUtilityWindowMask)
+			window.setStyleMask(window.styleMask & ~NSClosableWindowMask & ~NSResizableWindowMask & ~NSTitledWindowMask)# & ~NSUtilityWindowMask)
 		end
 		
 		@textView.setEditable(newState)
@@ -104,6 +113,8 @@ class	PanelController < NSWindowController
 	def windowDidLoad
 		window.setLevel(CGWindowLevelForKey(KCGDesktopIconWindowLevelKey))
 		window.setFrame(@rect, display: true, animate: true)
+		window.setTitle(@title)
+		window.setBackgroundColor(@backgroundColor)
 		setEditable(false)
 		
 		@notifier.requestUpdate(self)
@@ -116,8 +127,24 @@ class	PanelController < NSWindowController
 		@controller.removePanel(self)
 	end
 	
+	def windowDidResize(notification)
+		@controller.windowFrameChanged(self)
+	end
+	
+	def windowDidMove(notification)
+		@controller.windowFrameChanged(self)
+	end
+	
+	def windowDidBecomeMain(notification)
+		@controller.gainedFocus(self)
+	end
+	
+	def windowDidResignMain(notification)
+		@controller.lostFocus(self)
+	end
+	
 	def description
-		"PanelController: type = '#{@type}', formula = '#{@formula.string}', x = #{rect.origin.x}, y = #{rect.origin.y}, width = #{rect.size.width}, height = #{rect.size.height}"
+		"PanelController: type = '#{@type}', formula = '#{@formula.string}', x = #{@rect.origin.x}, y = #{@rect.origin.y}, width = #{@rect.size.width}, height = #{@rect.size.height}"
 	end
 	
 end
