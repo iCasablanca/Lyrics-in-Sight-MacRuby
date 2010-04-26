@@ -25,6 +25,7 @@
 				4D1A51A010A4FF5D0046A98A /* ShellScript */,
 			);
 			dependencies = (
+				9EE4B7F811863D1F00DFCCB4 /* PBXTargetDependency */,
 			);
 			name = Compile;
 			productName = Compile;
@@ -50,11 +51,11 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		9E5F67BE1182F6B300598A81 /* LyricsFinder.rb in Resources */ = {isa = PBXBuildFile; fileRef = 9E5F67BD1182F6B300598A81 /* LyricsFinder.rb */; };
+		9EE4B86011864EE200DFCCB4 /* Panel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EE4B85F11864EE200DFCCB4 /* Panel.xib */; };
 		D07810541182250700597466 /* AppDelegate.rb in Resources */ = {isa = PBXBuildFile; fileRef = D07810531182250700597466 /* AppDelegate.rb */; };
 		D078105D1182272C00597466 /* AppController.rb in Resources */ = {isa = PBXBuildFile; fileRef = D078105C1182272C00597466 /* AppController.rb */; };
 		D078107D118228F200597466 /* menubaricon.png in Resources */ = {isa = PBXBuildFile; fileRef = D078107C118228F200597466 /* menubaricon.png */; };
 		D07810A31182335200597466 /* PanelController.rb in Resources */ = {isa = PBXBuildFile; fileRef = D07810A21182335200597466 /* PanelController.rb */; };
-		D07810A6118233DF00597466 /* Panel.xib in Resources */ = {isa = PBXBuildFile; fileRef = D07810A5118233DF00597466 /* Panel.xib */; };
 		D07810AD118237EA00597466 /* NotifierFactory.rb in Resources */ = {isa = PBXBuildFile; fileRef = D07810AC118237EA00597466 /* NotifierFactory.rb */; };
 		D07810B0118238F500597466 /* AbstractNotifier.rb in Resources */ = {isa = PBXBuildFile; fileRef = D07810AF118238F500597466 /* AbstractNotifier.rb */; };
 		D07810D5118239DB00597466 /* ITunesNotifier.rb in Resources */ = {isa = PBXBuildFile; fileRef = D07810D4118239DB00597466 /* ITunesNotifier.rb */; };
@@ -64,6 +65,16 @@
 		D0A49A751185F06F0068B594 /* PanelPreferencesController.rb in Resources */ = {isa = PBXBuildFile; fileRef = D0A49A741185F06F0068B594 /* PanelPreferencesController.rb */; };
 		D0A49AC11185FD8A0068B594 /* Panel.rb in Resources */ = {isa = PBXBuildFile; fileRef = D0A49AC01185FD8A0068B594 /* Panel.rb */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9EE4B7F711863D1F00DFCCB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090 /* Lyrics-in-Sight-MacRuby */;
+			remoteInfo = "Lyrics-in-Sight-MacRuby";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		172754B4107597CF00D0347B /* CopyFiles */ = {
@@ -92,11 +103,11 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Lyrics-in-Sight-MacRuby.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lyrics-in-Sight-MacRuby.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E5F67BD1182F6B300598A81 /* LyricsFinder.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = LyricsFinder.rb; sourceTree = "<group>"; };
+		9EE4B85F11864EE200DFCCB4 /* Panel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Panel.xib; sourceTree = "<group>"; };
 		D07810531182250700597466 /* AppDelegate.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = AppDelegate.rb; sourceTree = "<group>"; };
 		D078105C1182272C00597466 /* AppController.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = AppController.rb; sourceTree = "<group>"; };
 		D078107C118228F200597466 /* menubaricon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menubaricon.png; sourceTree = "<group>"; };
 		D07810A21182335200597466 /* PanelController.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PanelController.rb; sourceTree = "<group>"; };
-		D07810A5118233DF00597466 /* Panel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Panel.xib; path = "../Lyrics-in-Sight/Panel.xib"; sourceTree = SOURCE_ROOT; };
 		D07810AC118237EA00597466 /* NotifierFactory.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = NotifierFactory.rb; sourceTree = "<group>"; };
 		D07810AF118238F500597466 /* AbstractNotifier.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = AbstractNotifier.rb; sourceTree = "<group>"; };
 		D07810D4118239DB00597466 /* ITunesNotifier.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ITunesNotifier.rb; sourceTree = "<group>"; };
@@ -199,7 +210,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D07810A5118233DF00597466 /* Panel.xib */,
+				9EE4B85F11864EE200DFCCB4 /* Panel.xib */,
 				D078107C118228F200597466 /* menubaricon.png */,
 				2BFA9DA510CDF852007972A1 /* MainMenu.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -272,7 +283,6 @@
 				D078105D1182272C00597466 /* AppController.rb in Resources */,
 				D078107D118228F200597466 /* menubaricon.png in Resources */,
 				D07810A31182335200597466 /* PanelController.rb in Resources */,
-				D07810A6118233DF00597466 /* Panel.xib in Resources */,
 				D07810AD118237EA00597466 /* NotifierFactory.rb in Resources */,
 				D07810B0118238F500597466 /* AbstractNotifier.rb in Resources */,
 				D07810D5118239DB00597466 /* ITunesNotifier.rb in Resources */,
@@ -282,6 +292,7 @@
 				D0A49A711185EFFC0068B594 /* PanelPreferences.xib in Resources */,
 				D0A49A751185F06F0068B594 /* PanelPreferencesController.rb in Resources */,
 				D0A49AC11185FD8A0068B594 /* Panel.rb in Resources */,
+				9EE4B86011864EE200DFCCB4 /* Panel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +350,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9EE4B7F811863D1F00DFCCB4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D1107260486CEB800E47090 /* Lyrics-in-Sight-MacRuby */;
+			targetProxy = 9EE4B7F711863D1F00DFCCB4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
