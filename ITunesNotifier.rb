@@ -41,52 +41,52 @@ class	ITunesNotifier < AbstractNotifier
 	def requestUpdate(controller)
 		if @userInfo == nil
 			@userInfo = Hash.new
-			case @iTunes.playerState
-			when ITunesEPlSStopped
-				@userInfo["Player State"] = "Stopped"
-			when ITunesEPlSPlaying
-				@userInfo["Player State"] = "Playing"
-			when ITunesEPlSPaused
-				@userInfo["Player State"] = "Paused"
-			when ITunesEPlSFastForwarding
-				@userInfo["Player State"] = "Fast Forwarding"
-			when ITunesEPlSRewinding
-				@userInfo["Player State"] = "Rewinding"
-			else
-				NSLog("Player State not found")
-			end
-			
-			currentTrack = @iTunes.currentTrack
-			if currentTrack != nil
-				@userInfo["Album"] = currentTrack.album
-				@userInfo["Album Artist"] = currentTrack.albumArtist
-				@userInfo["Album Rating"] = currentTrack.albumRating
-				@userInfo["Artist"] = currentTrack.artist
-				@userInfo["Artwork Count"] = currentTrack.artworks.count
-				@userInfo["Compilation"] = currentTrack.compilation
-				@userInfo["Composer"] = currentTrack.composer
-				@userInfo["Description"] = currentTrack.objectDescription
-				@userInfo["Disc Count"] = currentTrack.discCount
-				@userInfo["Disc Number"] = currentTrack.discNumber
-				@userInfo["GaplessAlbum"] = currentTrack.gapless
-				@userInfo["Genre"] = currentTrack.genre
-				@userInfo["Grouping"] = currentTrack.grouping
-				@userInfo["Name"] = currentTrack.name
-				@userInfo["PersistentID"] = currentTrack.persistentID
-				@userInfo["Play Count"] = currentTrack.playedCount
-				@userInfo["Play Date"] = currentTrack.playedDate
-				@userInfo["Rating Computed"] = currentTrack.rating
-				@userInfo["Skip Count"] = currentTrack.skippedCount
-				@userInfo["Skip Date"] = currentTrack.skippedDate
-				@userInfo["Total Time"] = currentTrack.duration * 1000
-				@userInfo["Track Count"] = currentTrack.trackCount
-				@userInfo["Track Number"] = currentTrack.trackNumber
-				@userInfo["Year"] = currentTrack.year
-				@userInfo["Lyrics"] = lyricsOfTrack(currentTrack)
-			else
-				@userInfo = NSDictionary.new
-			end
-		end
+			if @iTunes.isRunning
+				case @iTunes.playerState
+				when ITunesEPlSStopped
+					@userInfo["Player State"] = "Stopped"
+				when ITunesEPlSPlaying
+					@userInfo["Player State"] = "Playing"
+				when ITunesEPlSPaused
+					@userInfo["Player State"] = "Paused"
+				when ITunesEPlSFastForwarding
+					@userInfo["Player State"] = "Fast Forwarding"
+				when ITunesEPlSRewinding
+					@userInfo["Player State"] = "Rewinding"
+				else
+					NSLog("Player State not found")
+				end
+
+				currentTrack = @iTunes.currentTrack
+				if currentTrack != nil
+					@userInfo["Album"] = currentTrack.album
+					@userInfo["Album Artist"] = currentTrack.albumArtist
+					@userInfo["Album Rating"] = currentTrack.albumRating
+					@userInfo["Artist"] = currentTrack.artist
+					@userInfo["Artwork Count"] = currentTrack.artworks.count
+					@userInfo["Compilation"] = currentTrack.compilation
+					@userInfo["Composer"] = currentTrack.composer
+					@userInfo["Description"] = currentTrack.objectDescription
+					@userInfo["Disc Count"] = currentTrack.discCount
+					@userInfo["Disc Number"] = currentTrack.discNumber
+					@userInfo["GaplessAlbum"] = currentTrack.gapless
+					@userInfo["Genre"] = currentTrack.genre
+					@userInfo["Grouping"] = currentTrack.grouping
+					@userInfo["Name"] = currentTrack.name
+					@userInfo["PersistentID"] = currentTrack.persistentID
+					@userInfo["Play Count"] = currentTrack.playedCount
+					@userInfo["Play Date"] = currentTrack.playedDate
+					@userInfo["Rating Computed"] = currentTrack.rating
+					@userInfo["Skip Count"] = currentTrack.skippedCount
+					@userInfo["Skip Date"] = currentTrack.skippedDate
+					@userInfo["Total Time"] = currentTrack.duration * 1000
+					@userInfo["Track Count"] = currentTrack.trackCount
+					@userInfo["Track Number"] = currentTrack.trackNumber
+					@userInfo["Year"] = currentTrack.year
+					@userInfo["Lyrics"] = lyricsOfTrack(currentTrack)
+				end # currentTrack != nil
+			end # @iTunes.isRunning
+		end # @userInfo == nil
 		controller.update(@userInfo)
 	end
 	
