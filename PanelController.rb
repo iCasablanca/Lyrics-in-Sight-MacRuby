@@ -21,9 +21,10 @@ class	PanelController < NSWindowController
 			setShouldCascadeWindows(false)
 			@rect = NSMakeRect(500, 500, 500, 300)
 			@type = type
-			@formula = NSAttributedString.alloc.initWithString("Edit this text")
+			
+			@formula = NSAttributedString.alloc.initWithString("Edit this text", attributes:{ NSForegroundColorAttributeName => NSColor.whiteColor })
 			@backgroundColor = NSColor.colorWithCalibratedWhite(0.125, alpha:1.000)
-			@title = ""
+			@alignment = NSLeftTextAlignment
 			@inEditMode = false
 			
 			@notifier = NotifierFactory.getNotifierForPanelController(self)
@@ -40,7 +41,7 @@ class	PanelController < NSWindowController
 			@rect.size.width	= dictionary["Width"]
 			@rect.size.height	= dictionary["Height"]
 			@backgroundColor	= NSKeyedUnarchiver.unarchiveObjectWithData(dictionary["BackgroundColor"])
-			@title						= dictionary["Title"]
+			@alignment				= dictionary["Alignment"]
 			return self
 		end
 	end
@@ -54,7 +55,7 @@ class	PanelController < NSWindowController
 		dictionary["Width"]		= @rect.size.width
 		dictionary["Height"]	= @rect.size.height
 		dictionary["BackgroundColor"] = NSKeyedArchiver.archivedDataWithRootObject(@backgroundColor)
-		dictionary["Title"]		= @title
+		dictionary["Alignment"] = @alignment
 		return dictionary
 	end
 	
@@ -87,8 +88,7 @@ class	PanelController < NSWindowController
 		@formula = NSAttributedString.alloc.initWithAttributedString(@textView.textStorage) # copy attributed string back
 		@rect = window.frame
 		@backgroundColor = window.backgroundColor
-		@title = ""
-		@title = window.title if window.title
+		@alignment = @textView.alignment
 		
 		setEditable(false)
 		
@@ -96,6 +96,7 @@ class	PanelController < NSWindowController
 	end
 	
 	def setEditable(newState)
+		rect = window.frame
 		window.setMovable(newState)
 		if newState
 			window.setStyleMask(window.styleMask | NSClosableWindowMask | NSResizableWindowMask | NSTitledWindowMask | NSUtilityWindowMask)
@@ -108,15 +109,17 @@ class	PanelController < NSWindowController
 		if !newState
 			@textView.updateInsertionPointStateAndRestartTimer(false)
 		end
+		window.setFrame(rect, display:true, animate: true)
 	end
 	
 	def windowDidLoad
 		window.setLevel(CGWindowLevelForKey(KCGDesktopIconWindowLevelKey))
 		window.setFrame(@rect, display: true, animate: true)
-		window.setTitle(@title)
 		window.setBackgroundColor(@backgroundColor)
+		
 		setEditable(false)
 		
+		@textView.setAlignment(@alignment)
 		@notifier.requestUpdate(self)
 		
 		window.display

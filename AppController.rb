@@ -116,7 +116,7 @@ class AppController
 			@inEditMode = true
 		else
 			@inEditMode = false
-			if @panelPreferencesController.hideWindow
+			if @panelPreferencesController.editModeStopped
 				@panelControllers.each do |controller|
 					controller.editModeStopped
 				end
