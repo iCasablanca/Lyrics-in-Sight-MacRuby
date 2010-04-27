@@ -99,9 +99,9 @@ class	ITunesNotifier < AbstractNotifier
 		if lyrics == ""
 			lyrics = LyricsFinder.instance.findLyricsOf(track.name, by:track.artist)
 			## uncomment the following line to automatically set lyrics of song, if found
-			# if lyrics != "" # set lyrics of song via iTunes 
-			# @iTunes.currentTrack.setLyrics(lyrics)
-			# end
+			if lyrics != "" && GlobalOptions.instance.getOption(:writeLyricsInFile) # set lyrics of song via iTunes
+				@iTunes.currentTrack.setLyrics(lyrics)
+			end
 		end
 		
 		if lyrics != ""

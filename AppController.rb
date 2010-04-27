@@ -9,6 +9,8 @@ require 'PanelController'
 require 'NotifierFactory'
 
 class AppController
+
+	attr_reader :inEditMode
 	
 	def init
 		if super
@@ -19,8 +21,10 @@ class AppController
 			@quit_lyrics_in_sight_menu_item = 0
 			@edit_mode_menu_item = 1
 			@add_panel_menu_item = 2
+			@write_lyrics_in_file_menu_item = 3
 			# UserDefaults key
 			@LiSPanelControllers = "PanelControllers"
+			@LiSWriteLyricsInFile = "WriteLyricsInFile"
 			return self
 		end
 	end
@@ -56,6 +60,13 @@ class AppController
 		item.setTag(@edit_mode_menu_item)
 		menu.addItem(item)
 		
+		item = NSMenuItem.alloc.initWithTitle("Write Lyrics in File",
+																					action: :"writeLyricsInFile:",
+																					keyEquivalent: "")
+		item.setTarget(self)
+		item.setTag(@write_lyrics_in_file_menu_item)
+		menu.addItem(item)
+		
 		item = NSMenuItem.alloc.initWithTitle("Quit Lyrics in Sight",
 																					action: :"terminate:",
 																					keyEquivalent: "")
@@ -74,11 +85,16 @@ class AppController
 	def registerUserDefaults
 		defaultValues = {}
 		defaultValues[@LiSPanelControllers] = []
+		defaultValues[@LiSWriteLyricsInFile] = false
 		NSUserDefaults.standardUserDefaults.registerDefaults(defaultValues)
 	end
 	
 	def loadUserDefaults
 		defaults = NSUserDefaults.standardUserDefaults
+		
+		GlobalOptions.instance.setOption(:writeLyricsInFile, defaults[@LiSWriteLyricsInFile])
+		
+		@statusItem.menu.itemWithTag(@write_lyrics_in_file_menu_item).setState(NSOnState) if defaults[@LiSWriteLyricsInFile]
 		@panelControllers = []
 		defaults[@LiSPanelControllers].each do |dict|
 			@panelControllers.push(PanelController.alloc.initWithControllerAndDictionary(self,dict))
@@ -87,6 +103,9 @@ class AppController
 	
 	def saveUserDefaults
 		defaults = NSUserDefaults.standardUserDefaults
+		
+		defaults[@LiSWriteLyricsInFile] = GlobalOptions.instance.getOption(:writeLyricsInFile)
+		
 		panelControllerAsDictionary = []
 		@panelControllers.each do |controller|
 			panelControllerAsDictionary.push(controller.dictionary)
@@ -157,6 +176,14 @@ class AppController
 	
 	def	windowFrameChanged(panelController)
 		@panelPreferencesController.windowFrameChanged(panelController) if @inEditMode
+	end
+	
+	def writeLyricsInFile(sender)		
+		oldState = GlobalOptions.instance.getOption(:writeLyricsInFile)
+		GlobalOptions.instance.setOption(:writeLyricsInFile, !oldState)
+		
+		sender.setState(NSOnState)	if !oldState
+		sender.setState(NSOffState)	if oldState
 	end
 	
 end

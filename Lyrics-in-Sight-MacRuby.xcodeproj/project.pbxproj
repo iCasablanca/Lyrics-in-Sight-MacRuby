@@ -65,6 +65,7 @@
 		D0A49A711185EFFC0068B594 /* PanelPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A49A701185EFFC0068B594 /* PanelPreferences.xib */; };
 		D0A49A751185F06F0068B594 /* PanelPreferencesController.rb in Resources */ = {isa = PBXBuildFile; fileRef = D0A49A741185F06F0068B594 /* PanelPreferencesController.rb */; };
 		D0A49AC11185FD8A0068B594 /* Panel.rb in Resources */ = {isa = PBXBuildFile; fileRef = D0A49AC01185FD8A0068B594 /* Panel.rb */; };
+		D0D5DEA511871B7800B53625 /* GlobalOptions.rb in Resources */ = {isa = PBXBuildFile; fileRef = D0D5DEA411871B7800B53625 /* GlobalOptions.rb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,7 @@
 		D0A49A701185EFFC0068B594 /* PanelPreferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PanelPreferences.xib; sourceTree = "<group>"; };
 		D0A49A741185F06F0068B594 /* PanelPreferencesController.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PanelPreferencesController.rb; sourceTree = "<group>"; };
 		D0A49AC01185FD8A0068B594 /* Panel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Panel.rb; sourceTree = "<group>"; };
+		D0D5DEA411871B7800B53625 /* GlobalOptions.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = GlobalOptions.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				9E5F67BD1182F6B300598A81 /* LyricsFinder.rb */,
 				D078124A1182494100597466 /* FormulaParser.rb */,
 				D0A49A741185F06F0068B594 /* PanelPreferencesController.rb */,
+				D0D5DEA411871B7800B53625 /* GlobalOptions.rb */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				D0A49AC11185FD8A0068B594 /* Panel.rb in Resources */,
 				9EE4B86011864EE200DFCCB4 /* Panel.xib in Resources */,
 				D09387B61186E0BA00E9E69E /* macRuby.icns in Resources */,
+				D0D5DEA511871B7800B53625 /* GlobalOptions.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
