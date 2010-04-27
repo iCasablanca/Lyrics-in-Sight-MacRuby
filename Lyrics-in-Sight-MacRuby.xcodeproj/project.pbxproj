@@ -51,6 +51,7 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		9E5F67BE1182F6B300598A81 /* LyricsFinder.rb in Resources */ = {isa = PBXBuildFile; fileRef = 9E5F67BD1182F6B300598A81 /* LyricsFinder.rb */; };
+		9EBBA96A1186E86900A0A1F5 /* TextView.rb in Resources */ = {isa = PBXBuildFile; fileRef = 9EBBA9691186E86900A0A1F5 /* TextView.rb */; };
 		9EE4B86011864EE200DFCCB4 /* Panel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EE4B85F11864EE200DFCCB4 /* Panel.xib */; };
 		D07810541182250700597466 /* AppDelegate.rb in Resources */ = {isa = PBXBuildFile; fileRef = D07810531182250700597466 /* AppDelegate.rb */; };
 		D078105D1182272C00597466 /* AppController.rb in Resources */ = {isa = PBXBuildFile; fileRef = D078105C1182272C00597466 /* AppController.rb */; };
@@ -105,6 +106,7 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Lyrics-in-Sight-MacRuby.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lyrics-in-Sight-MacRuby.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E5F67BD1182F6B300598A81 /* LyricsFinder.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = LyricsFinder.rb; sourceTree = "<group>"; };
+		9EBBA9691186E86900A0A1F5 /* TextView.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = TextView.rb; sourceTree = "<group>"; };
 		9EE4B85F11864EE200DFCCB4 /* Panel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Panel.xib; sourceTree = "<group>"; };
 		D07810531182250700597466 /* AppDelegate.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = AppDelegate.rb; sourceTree = "<group>"; };
 		D078105C1182272C00597466 /* AppController.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = AppController.rb; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				D078124A1182494100597466 /* FormulaParser.rb */,
 				D0A49A741185F06F0068B594 /* PanelPreferencesController.rb */,
 				D0D5DEA411871B7800B53625 /* GlobalOptions.rb */,
+				9EBBA9691186E86900A0A1F5 /* TextView.rb */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				9EE4B86011864EE200DFCCB4 /* Panel.xib in Resources */,
 				D09387B61186E0BA00E9E69E /* macRuby.icns in Resources */,
 				D0D5DEA511871B7800B53625 /* GlobalOptions.rb in Resources */,
+				9EBBA96A1186E86900A0A1F5 /* TextView.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
