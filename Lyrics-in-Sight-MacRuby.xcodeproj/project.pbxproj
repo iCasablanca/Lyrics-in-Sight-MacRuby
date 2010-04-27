@@ -61,6 +61,7 @@
 		D07810D5118239DB00597466 /* ITunesNotifier.rb in Resources */ = {isa = PBXBuildFile; fileRef = D07810D4118239DB00597466 /* ITunesNotifier.rb */; };
 		D078124B1182494100597466 /* FormulaParser.rb in Resources */ = {isa = PBXBuildFile; fileRef = D078124A1182494100597466 /* FormulaParser.rb */; };
 		D078132111825B9C00597466 /* ITunes.bridgesupport in Resources */ = {isa = PBXBuildFile; fileRef = D078132011825B9C00597466 /* ITunes.bridgesupport */; };
+		D09387B61186E0BA00E9E69E /* macRuby.icns in Resources */ = {isa = PBXBuildFile; fileRef = D09387B51186E0BA00E9E69E /* macRuby.icns */; };
 		D0A49A711185EFFC0068B594 /* PanelPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A49A701185EFFC0068B594 /* PanelPreferences.xib */; };
 		D0A49A751185F06F0068B594 /* PanelPreferencesController.rb in Resources */ = {isa = PBXBuildFile; fileRef = D0A49A741185F06F0068B594 /* PanelPreferencesController.rb */; };
 		D0A49AC11185FD8A0068B594 /* Panel.rb in Resources */ = {isa = PBXBuildFile; fileRef = D0A49AC01185FD8A0068B594 /* Panel.rb */; };
@@ -71,7 +72,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D1107260486CEB800E47090 /* Lyrics-in-Sight-MacRuby */;
+			remoteGlobalIDString = 8D1107260486CEB800E47090;
 			remoteInfo = "Lyrics-in-Sight-MacRuby";
 		};
 /* End PBXContainerItemProxy section */
@@ -113,6 +114,7 @@
 		D07810D4118239DB00597466 /* ITunesNotifier.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = ITunesNotifier.rb; sourceTree = "<group>"; };
 		D078124A1182494100597466 /* FormulaParser.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = FormulaParser.rb; sourceTree = "<group>"; };
 		D078132011825B9C00597466 /* ITunes.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ITunes.bridgesupport; sourceTree = "<group>"; };
+		D09387B51186E0BA00E9E69E /* macRuby.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = macRuby.icns; sourceTree = "<group>"; };
 		D0A49A701185EFFC0068B594 /* PanelPreferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PanelPreferences.xib; sourceTree = "<group>"; };
 		D0A49A741185F06F0068B594 /* PanelPreferencesController.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PanelPreferencesController.rb; sourceTree = "<group>"; };
 		D0A49AC01185FD8A0068B594 /* Panel.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = Panel.rb; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D09387B51186E0BA00E9E69E /* macRuby.icns */,
 				9EE4B85F11864EE200DFCCB4 /* Panel.xib */,
 				D078107C118228F200597466 /* menubaricon.png */,
 				2BFA9DA510CDF852007972A1 /* MainMenu.xib */,
@@ -293,6 +296,7 @@
 				D0A49A751185F06F0068B594 /* PanelPreferencesController.rb in Resources */,
 				D0A49AC11185FD8A0068B594 /* Panel.rb in Resources */,
 				9EE4B86011864EE200DFCCB4 /* Panel.xib in Resources */,
+				D09387B61186E0BA00E9E69E /* macRuby.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
