@@ -40,8 +40,15 @@ class LyricsFinder
 		
 		content = document.stringValue;
 		
-		if content =~ /You must enable javascript to view this page\. This is a requirement of our licensing agreement with music Gracenote\..*?Ringtone to your Cell (.*)\n<p>NewPP limit report/m
-			return $1
+		if content =~ /You must enable javascript to view this page\. This is a requirement of our licensing agreement with music Gracenote\..*?Ringtone to your Cell (.*?\n.*?)[ ]*\n<p>NewPP limit report/m
+			content = $1 # lyrics found -> take first
+			if content =~ /You must enable javascript to view this page\. This is a requirement of our licensing agreement with music Gracenote\..*?Ringtone to your Cell (.*)/m
+				content = $1 # first of multiple lyrics -> remove ads
+			end
+			if content =~ /[...].*Unfortunately, we are not licensed to display the full lyrics for this song at the moment./m
+				return "" # full lyrics 
+			end
+			return content
 		end
 		
 		return ""
