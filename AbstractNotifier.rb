@@ -7,7 +7,7 @@
 
 class	AbstractNotifier
 	
-	def init
+	def initialize
 		if super
 			@panelControllers = []
 			self

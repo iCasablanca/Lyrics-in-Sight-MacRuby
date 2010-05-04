@@ -12,7 +12,7 @@ framework 'ScriptingBridge'
 class	ITunesNotifier < AbstractNotifier
 	include Singleton
 	
-	def init
+	def initialize
 		if super
 			NSDistributedNotificationCenter.defaultCenter.addObserver(self,
 																																selector: :"songChanged:",

@@ -12,7 +12,7 @@ class AppController
 
 	attr_reader :inEditMode
 	
-	def init
+	def initialize
 		if super
 			@inEditMode = false
 			@panelPreferencesController = PanelPreferencesController.alloc.initWithController(self)

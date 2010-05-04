@@ -11,7 +11,7 @@ class Panel < NSPanel
 																					filename: false)
 	end
 	
-	def init
+	def initialize
 		setHidesOnDeactive(false)
 	end
 	
