@@ -64,7 +64,7 @@ class	PanelController < NSWindowController
 			return
 		end
 		
-		if userInfo == nil
+		if userInfo.nil?
 			@textView.setString("")
 			return
 		end

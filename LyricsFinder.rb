@@ -10,7 +10,7 @@ class LyricsFinder
 	include Singleton
 		
 	def	findLyricsOf(title, by:artist)
-		return "" if title == nil or artist == nil
+		return "" if title.nil? or artist.nil?
 		baseUrl = "http://lyrics.wikia.com/"
   
     # try to download lyrics with given artist and title
@@ -31,12 +31,12 @@ class LyricsFinder
 	
 	def downloadLyricsFrom(url)
 		data = NSData.dataWithContentsOfURL( NSURL.URLWithString(url) )
-		return nil if data == nil
+		return nil if data.nil?
 		
 		document = NSXMLDocument.alloc.initWithData(data,
 																				options:NSXMLDocumentTidyHTML,
 																					error:nil);
-		return nil if document == nil;
+		return nil if document.nil?;
 		
 		content = document.stringValue;
 		

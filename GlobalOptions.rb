@@ -10,7 +10,7 @@ class GlobalOptions
 	include Singleton
 	
 	def	setOption(key, value)
-		@options = Hash.new if @options == nil
+		@options = Hash.new if @options.nil?
 		@options[key] = value
 	end
 	

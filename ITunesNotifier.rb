@@ -28,8 +28,8 @@ class	ITunesNotifier < AbstractNotifier
 	
 	def songChanged(notification)
 		@userInfo = notification.userInfo.mutableCopy
-		
-		if @iTunes.isRunning and (@userInfo["Player State"] != "Stopped" or @userInfo["Name"] != nil)
+
+		if @iTunes.isRunning and (@userInfo["Player State"] != "Stopped" or !(@userInfo["Name"].nil?))
 			@userInfo["Lyrics"] = lyricsOfTrack(@iTunes.currentTrack)
 		end
 		
@@ -39,7 +39,7 @@ class	ITunesNotifier < AbstractNotifier
 	end
 	
 	def requestUpdate(controller)
-		if @userInfo == nil
+		if @userInfo.nil?
 			@userInfo = Hash.new
 			if @iTunes.isRunning
 				case @iTunes.playerState
@@ -58,7 +58,7 @@ class	ITunesNotifier < AbstractNotifier
 				end
 
 				currentTrack = @iTunes.currentTrack
-				if currentTrack != nil
+				if !(currentTrack.nil?)
 					@userInfo["Album"] = currentTrack.album
 					@userInfo["Album Artist"] = currentTrack.albumArtist
 					@userInfo["Album Rating"] = currentTrack.albumRating
@@ -86,13 +86,13 @@ class	ITunesNotifier < AbstractNotifier
 					@userInfo["Lyrics"] = lyricsOfTrack(currentTrack)
 				end # currentTrack != nil
 			end # @iTunes.isRunning
-		end # @userInfo == nil
+		end # @userInfo.nil?
 		controller.update(@userInfo)
 	end
 	
 	def lyricsOfTrack(track)
 		lyrics = track.lyrics
-		if lyrics == nil
+		if lyrics.nil?
 			lyrics = ""
 		end
 		

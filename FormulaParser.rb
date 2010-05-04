@@ -15,7 +15,7 @@ class	FormulaParser
 	
 	def evaluateNextAlternative(formula)
 		location = formula.string =~ /\|/
-		if location == nil # last alternative: return empty string
+		if location.nil? # last alternative: return empty string
 			return NSAttributedString.new
 		end
 		# alternative found -> evaluate
@@ -28,7 +28,7 @@ class	FormulaParser
 			
 			if formula.string.length > 0 && formula.string[0] == "["
 				location = formula.string =~ /\]/
-				if location == nil
+				if location.nil?
 					NSLog("Formula malformed: '[' without matching ']'")
 					return NSAttributedString.new
 				end
@@ -43,7 +43,7 @@ class	FormulaParser
 			
 			location = formula.string =~ /[<\{\|]/
 			# no special characters found -> append remaining formula and return output
-			if location == nil
+			if location.nil?
 				output.appendAttributedString(formula)
 				return output
 			end
@@ -57,7 +57,7 @@ class	FormulaParser
 			when "<"
 				# search for matching closing character
 				location = formula.string =~ />/
-				if location == nil
+				if location.nil?
 					NSLog("Formula malformed: '<' without matching '>'")
 					return NSAttributedString.new
 				end
@@ -67,7 +67,7 @@ class	FormulaParser
 				formula = formula.attributedSubstringFromRange([location + 1, formula.string.length - location - 1])
 				
 				value = evaluateToken(token)
-				if value == nil # token evaluates to nil -> find next alternative
+				if value.nil? # token evaluates to nil -> find next alternative
 					return evaluateNextAlternative(formula)
 				end
 				# append evaluated token
@@ -75,7 +75,7 @@ class	FormulaParser
 			when "{"
 				# search for (matching) closing character
 				location = formula.string =~ /\}/
-				if location == nil
+				if location.nil?
 					NSLog("Formula malformed: '{' without matching '}'")
 					return NSAttributedString.new
 				end
@@ -131,7 +131,7 @@ class	FormulaParser
 		location = condition.string =~ /==/
 		equal = true
 		
-		if location == nil
+		if location.nil?
 			# search for != operator
 			location = condition.string =~ /!=/
 			equal = false
@@ -161,7 +161,7 @@ class	FormulaParser
 		
 		# an operand was evaluated to nil -> return false
 		#NSLog("First (#{first}) or second (#{second}) is nil")
-		return false if first == nil || second == nil
+		return false if first.nil? || second.nil?
 		
 		result = (first.string. == second.string)
 		
