@@ -29,7 +29,7 @@ class	ITunesNotifier < AbstractNotifier
 	def songChanged(notification)
 		@userInfo = notification.userInfo.mutableCopy
 		
-		if @iTunes.isRunning and @userInfo["Player State"] != "Stopped"
+		if @iTunes.isRunning and (@userInfo["Player State"] != "Stopped" or @userInfo["Name"] != nil)
 			@userInfo["Lyrics"] = lyricsOfTrack(@iTunes.currentTrack)
 		end
 		
