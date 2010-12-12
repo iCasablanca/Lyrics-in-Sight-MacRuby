@@ -10,7 +10,7 @@ class LyricsFinder
 	include Singleton
 		
 	def	findLyricsOf(title, by:artist)
-		# NSLog("findLyricsOf(#{title} , by:#{artist})")
+		NSLog("findLyricsOf(#{title} , by:#{artist})")
 		return "" if title.nil? or artist.nil?
 		baseUrl = "http://lyrics.wikia.com/"
   
@@ -60,9 +60,11 @@ class LyricsFinder
     uri = uri.split.join("_")
 		uri.sub!("ñ", "n")
     uri.sub!("ó", "o")
-		uri.sub!(",", "__XYZ___") # hack to prevent ',' from beeing replaced (1)
+		uri.sub!(",", "__XYZ001___") # hack to prevent ',' from beeing replaced (1)
+		uri.sub!("&", "__XYZ002___") # hack to prevent '&' from beeing replaced (1)
 		uri = URI.escape(uri, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-		uri.sub!("__XYZ___", ",") # hack to prevent ',' from beeing replaced (2)
+		uri.sub!("__XYZ001___", ",") # hack to prevent ',' from beeing replaced (2)
+		uri.sub!("__XYZ002___", "&") # hack to prevent '&' from beeing replaced (2)
 		return uri
   end	
 	
