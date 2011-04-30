@@ -54,7 +54,7 @@ class AppController
 		menu.setSubmenu(addPanelMenu, forItem: item)
 		
 		item = NSMenuItem.alloc.initWithTitle("Edit Panels",
-																					action: :"switchEditMode",
+																					action: :"switchEditMode:",
 																					keyEquivalent: "")
 		item.setTarget(self)
 		item.setTag(@edit_mode_menu_item)
@@ -113,7 +113,7 @@ class AppController
 		defaults[@LiSPanelControllers] = panelControllerAsDictionary
 	end
 	
-	def switchEditMode
+	def switchEditMode(sender)
 		if @inEditMode # switch to normal mode
 			setEditMode(false)
 		else # switch to edit mode
